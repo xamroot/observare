@@ -1,4 +1,5 @@
 from flask import Flask, render_template, Response
+import socket
 from camera import VideoCamera
 
 app = Flask(__name__)
