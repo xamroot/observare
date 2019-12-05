@@ -30,7 +30,6 @@ while (1):
     #processing in rgb for facial recognition
     rgb = faster_frame[:, :, [2, 1, 0]]
     
-    
     if count % 4 == 0:
         locations = fr.face_locations(rgb)
         face_names = []
@@ -42,26 +41,25 @@ while (1):
             for new_face in new_faces:
                 matches = fr.compare_faces(encodings, new_face)
 
-            if True in matches:
-                match_index = matches.index(True)
-                if match_index == 0: #aaron
-                    face_names.append("Aaron")
-                elif match_index == 1:
-                    face_names.append("Professor Bhuse")
-                elif match_index == 2:
-                    face_names.append("Camaal")
-                elif match_index == 3:
-                    face_names.append("Kelly")
-                elif match_index == 4:
-                    face_names.append("Max")
-        
-        print(face_names)
-        
+                if True in matches:
+                    match_index = matches.index(True)
+                    if match_index == 0: #aaron
+                        face_names.append("Aaron")
+                    elif match_index == 1:
+                        face_names.append("Professor Bhuse")
+                    elif match_index == 2:
+                        face_names.append("Camaal")
+                    elif match_index == 3:
+                        face_names.append("Kelly")
+                    elif match_index == 4:
+                        face_names.append("Max")
+                    else:
+                        face_names.append("Stranger")
         
         for (top, right, bottom, left), name in zip(locations, face_names):
             #draw box around each face in blue
             frame = cv2.rectangle(frame, (left*multiplier, top*multiplier), (right*multiplier, bottom*multiplier), (255, 0, 0), 2)
-            font = cv2.FONT_HERSHEY_DUPLEX
+            font = cv2.FONT_HERSHEY_SIMPLEX
             #add name in white to frame
             frame = cv2.putText(frame, name, (left*multiplier, bottom*multiplier), font, 1.0, (255, 255, 255), 1)
             
