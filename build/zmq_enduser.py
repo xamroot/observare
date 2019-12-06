@@ -1,10 +1,19 @@
 #import time
 import zmq
 import cv2
+import sys
+
+if (len(sys.argv) < 3):
+    print("Usage: python3 zmq_enduser.py ip listener_port")
+    sys.exit()
+
+ip = sys.argv[1]
+port = sys.argv[2]
+target = "tcp://" + ip + ":" + port
 
 context = zmq.Context()
 socket = context.socket(zmq.SUB)
-socket.connect("tcp://0.0.0.0:5553")
+socket.connect(target)
 #socket.connect("tcp://35.40.127.161:5555")
 socket.setsockopt(zmq.SUBSCRIBE, b'opencv')
 #sleep(2)

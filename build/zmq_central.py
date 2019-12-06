@@ -1,18 +1,29 @@
 #import time
 import zmq
 import cv2
+import sys
+
+if (len(sys.argv) < 3):
+    print("Usage: python3 zmq_central.py ip listener_port bind_port")
+    sys.exit()
+
+ip = sys.argv[1]
+port = sys.argv[2]
+target = "tcp://" + ip + ":" + port
+
+bind = "tcp://*:" + sys.argv[3]
 
 context = zmq.Context() # set zmq context, unsure of what it does
 
 # initialize socket to accept pi data
 pi_handler_socket = context.socket(zmq.SUB)
-pi_handler_socket.connect("tcp://0.0.0.0:5554")
+pi_handler_socket.connect(target)
 pi_handler_socket.setsockopt(zmq.SUBSCRIBE, b'opencv')
 print("pi facing socket initialized")
 
 # initialize socket to send pi data
 enduser_handler_socket = context.socket(zmq.PUB)
-enduser_handler_socket.bind("tcp://*:5553")
+enduser_handler_socket.bind(bind)
 print("end user facing socket initialized")
 
 # set metadata vars

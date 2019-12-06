@@ -20,7 +20,7 @@ print("encodings finished!")
 
 context = zmq.Context()
 socket = context.socket(zmq.PUB)
-socket.bind("tcp://0.0.0.0:5554")
+socket.bind("tcp://0.0.0.0:5555")
 #socket.bind("tcp://35.40.127.161:5555")
 cap = cv2.VideoCapture(0)
 
